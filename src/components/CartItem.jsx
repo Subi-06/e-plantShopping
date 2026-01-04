@@ -3,23 +3,27 @@ import { removeItem, updateQuantity } from "../redux/CartSlice";
 import { Link } from "react-router-dom";
 
 const CartItem = () => {
-  const cart = useSelector(state => state.cart);
+  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
-  const totalCost = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+  const calculateTotalCost = () => {
+    return cart.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+  };
+
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <div>
       <h2>Shopping Cart</h2>
-      <p>Total Items: {cart.length}</p>
-      <p>Total Cost: ₹{totalCost}</p>
+      <p>Total Plants: {totalItems}</p>
+      <p>Total Cost: ₹{calculateTotalCost()}</p>
 
-      {cart.map(item => (
+      {cart.map((item) => (
         <div key={item.id}>
-          <h3>{item.name}</h3>
+          <h4>{item.name}</h4>
           <p>₹{item.price}</p>
 
           <button
@@ -35,16 +39,18 @@ const CartItem = () => {
             +
           </button>
 
-          <span> {item.quantity} </span>
+          <span>{item.quantity}</span>
 
           <button
             onClick={() =>
-              dispatch(
-                updateQuantity({
-                  id: item.id,
-                  quantity: item.quantity - 1
-                })
-              )
+              item.quantity > 1
+                ? dispatch(
+                    updateQuantity({
+                      id: item.id,
+                      quantity: item.quantity - 1
+                    })
+                  )
+                : dispatch(removeItem(item.id))
             }
           >
             -

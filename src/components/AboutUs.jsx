@@ -1,9 +1,16 @@
 const AboutUs = () => {
   return (
-    <p>
-      Paradise Nursery is your trusted destination for premium indoor plants.
-      We believe plants bring peace, freshness, and beauty into every home.
-    </p>
+    <div className="about-us-container">
+      <h2>About Paradise Nursery</h2>
+      <p>
+        Paradise Nursery is dedicated to providing high-quality indoor plants
+        that bring freshness, peace, and beauty into your living spaces.
+      </p>
+      <p>
+        Our mission is to make plant shopping easy and enjoyable while promoting
+        a greener and healthier lifestyle.
+      </p>
+    </div>
   );
 };
 
